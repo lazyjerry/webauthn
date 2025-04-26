@@ -1,6 +1,6 @@
 import { server } from "@passwordless-id/webauthn";
 import { AuthenticationEncoded, RegistrationEncoded, RegistrationParsed } from "@passwordless-id/webauthn/src/types";
-// import { randomChallenge } from "./utils/challenge"; // ★新工具
+import { randomChallenge } from "./utils/challenge"; // ★新工具
 interface Env {
 	Storage: KVNamespace;
 }
@@ -52,8 +52,8 @@ export default {
 				const { username } = (await request.json()) as ChallengeReq;
 				if (!username) return jsonResponse({ status: 400 });
 
-				// const challenge = randomChallenge()
-				const challenge = crypto.randomUUID();
+				const challenge = randomChallenge();
+				// const challenge = crypto.randomUUID();
 				const storage: UserStorage = (await env.Storage.get(username, { type: "json" })) ?? {
 					challenge: "",
 					credentials: [],
@@ -111,8 +111,8 @@ export default {
 				});
 				if (!storage?.credentials?.length) return jsonResponse({ status: 404 });
 
-				// const challenge = randomChallenge()
-				const challenge = crypto.randomUUID();
+				const challenge = randomChallenge();
+				// const challenge = crypto.randomUUID();
 				await env.Storage.put(username, JSON.stringify({ ...storage, challenge }));
 
 				return jsonResponse({
