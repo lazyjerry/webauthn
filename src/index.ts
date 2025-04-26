@@ -52,7 +52,7 @@ export default {
 				const { username } = (await request.json()) as ChallengeReq;
 				if (!username) return jsonResponse({ status: 400 });
 
-				const challenge = server.randomChallenge();
+				const challenge = crypto.randomUUID();
 				const storage: UserStorage = (await env.Storage.get(username, { type: "json" })) ?? {
 					challenge: "",
 					credentials: [],
@@ -102,7 +102,7 @@ export default {
 				});
 				if (!storage?.credentials?.length) return jsonResponse({ status: 404 });
 
-				const challenge = server.randomChallenge();
+				const challenge = crypto.randomUUID();
 				await env.Storage.put(username, JSON.stringify({ ...storage, challenge }));
 
 				return jsonResponse({
