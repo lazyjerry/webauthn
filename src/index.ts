@@ -89,7 +89,15 @@ export default {
 					);
 					return jsonResponse({ status: 200 });
 				} catch (e) {
-					return jsonResponse({ status: 400, data: e });
+					return jsonResponse({
+						status: 400,
+						data: {
+							name: e.name,
+							message: e.message,
+							stack: e.stack,
+							...(e.details && { details: e.details }), // passwordless-id/webauthn 會附 details
+						},
+					});
 				}
 			}
 
@@ -142,7 +150,15 @@ export default {
 
 					return jsonResponse({ data: parsed });
 				} catch (e) {
-					return jsonResponse({ status: 400, data: e });
+					return jsonResponse({
+						status: 400,
+						data: {
+							name: e.name,
+							message: e.message,
+							stack: e.stack,
+							...(e.details && { details: e.details }), // passwordless-id/webauthn 會附 details
+						},
+					});
 				}
 			}
 		}
