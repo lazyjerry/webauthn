@@ -77,7 +77,7 @@ export default {
 				try {
 					const parsed = await server.verifyRegistration(registration, {
 						challenge: storage.challenge,
-						origin: host,
+						origin: request.headers.get("Origin") ?? host,
 					});
 
 					await env.Storage.put(
@@ -139,7 +139,7 @@ export default {
 				try {
 					const parsed = await server.verifyAuthentication(authentication, cred.credential, {
 						challenge: storage.challenge,
-						origin: host,
+						origin: request.headers.get("Origin") ?? host,
 						userVerified: true,
 						counter: cred.authenticator.counter,
 					});
