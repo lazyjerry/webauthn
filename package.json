@@ -14,6 +14,6 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@passwordless-id/webauthn": "^1.2.0"
+    "@passwordless-id/webauthn": "^1.6.2"
   }
 }
